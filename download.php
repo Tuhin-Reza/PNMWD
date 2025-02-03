@@ -5,11 +5,11 @@ if (isset($_GET['category']) && isset($_GET['content'])) {
     $category = $_GET['category'];
     $content_type = $_GET['content'];
 
-    // Determine the column to select based on the content_type parameter
+
     $column = ($content_type === 'email') ? 'email' : 'phone_number';
 
-    $stmt = $conn->prepare("SELECT date, $column FROM phone_numbers WHERE category = ? ORDER BY date");
-    $stmt->bind_param("s", $category);
+    $stmt = $conn->prepare("SELECT date, $column FROM phone_numbers WHERE category = ? AND contact_type = ? ORDER BY date");
+    $stmt->bind_param("ss", $category, $content_type);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -36,10 +36,10 @@ if (isset($_GET['category']) && isset($_GET['content'])) {
     }
 
     if (empty($fileContent)) {
-        $fileContent = "No data found for category: $category";
+        $fileContent = "No data found for category: $category and content type: $content_type";
     }
 
-    $fileName = $category . ".txt";
+    $fileName = $category . "_" . $content_type . ".txt";
 
     header('Content-Type: text/plain');
     header('Content-Disposition: attachment; filename="' . $fileName . '"');

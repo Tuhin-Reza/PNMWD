@@ -12,7 +12,7 @@ $counts = [
     'guardian_whatsapp' => 0,
     'guardian_email' => 0
 ];
-
+ 
 $result = $conn->query("SELECT category, contact_type, COUNT(*) AS count FROM phone_numbers GROUP BY category, contact_type");
 
 while ($row = $result->fetch_assoc()) {

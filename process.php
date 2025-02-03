@@ -5,7 +5,7 @@ function isValidPhoneNumber($number)
 {
     return preg_match("/^\+880(17|18|16|19|13|15|14)\d{8}$/", $number);
 }
-
+ 
 function isValidEmail($email)
 {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
